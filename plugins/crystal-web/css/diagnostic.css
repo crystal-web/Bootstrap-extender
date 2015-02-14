@@ -1,0 +1,181 @@
+/* inspired by every all in the web */
+/* Empty is not correct */
+div:empty, span:empty,li:empty, p:empty,td:empty, th:empty 
+{ padding: 0.5em; background: yellow !important; }
+/* Empty Attributes */
+*[alt=""], *[title=""], *[class=""], *[id=""], a[href=""], a[href="#"]
+{ border: 5px solid yellow !important; }
+/* Deprecated Elements */
+applet, basefont, center, dir, font, isindex, menu, s, strike, u
+{ border: 5px dotted red !important; }
+/* Deprecated Elements - cannot be overridden by user styles */
+applet:after, basefont:after, center:after, dir:after, font:after, isindex:after, menu:after, s:after, strike:after, u:after {
+    content: ' ERROR: Deprecated elements found. They cannot be overridden by user styles' !important;
+}
+
+/* Deprecated Attributes */
+*[background], *[bgcolor], *[clear], *[color], *[compact], *[noshade], *[nowrap], *[size], *[start],
+*[bottommargin], *[leftmargin], *[rightmargin], *[topmargin], *[marginheight], *[marginwidth], *[alink], *[link], *[text], *[vlink],
+*[align], *[valign],
+*[hspace], *[vspace],
+*[height], *[width],
+ul[type], ol[type], li[type]
+{ border: 5px solid red !important; }
+/* Deprecated Attributes - cannot be overridden by user styles */
+*[background]:after, *[bgcolor]:after, *[clear]:after, *[color]:after, *[compact]:after, *[noshade]:after, *[nowrap]:after, *[size]:after, 
+*[start]:after, *[bottommargin]:after, *[leftmargin]:after, *[rightmargin]:after, *[topmargin]:after, *[marginheight]:after, *[marginwidth]:after, 
+*[alink]:after, *[link]:after, *[text]:after, *[vlink]:after, *[align]:after, *[valign]:after, *[hspace]:after, *[vspace]:after, *[height]:after, 
+*[width]:after, ul[type]:after, ol[type]:after, li[type]:after {
+    content: ' ERROR: Deprecated attributes found. They cannot be overridden by user styles' !important;
+}
+/* Inline frames without title attribute */
+iframe:not([title]):after{
+    content: ' ERROR: iframe has no title. ' !important;
+}
+/* Proposed Deprecated Elements */
+input[type="button"], big, tt
+{ border: 5px dotted #33FF00 !important; }
+/* Proposed Deprecated Attributes */
+*[border], a[target], table[cellpadding], table[cellspacing], *[name]
+{ border: 5px solid #33FF00 !important; }
+
+/* Attribute class/id but empty ? */
+*[class=""], *[id=""] {outline: 5px dotted red;}
+/* img alt/title empty or not present ? */
+img[alt=""] {border: 3px dotted red;}
+img:not([alt]) {border: 5px solid red;}
+img[title=""] {outline: 3px dotted fuchsia;}
+img:not([title]) {outline: 5px solid fuchsia;}
+/**
+ *     Image-related checks
+ */
+/* server-side image map. Yes these are sometimes still seen, if rarely */
+img[ismap]:after{
+    content: ' ERROR: Replace server-side image map' !important;
+}
+/* Images without alt attribute */
+img:not([alt]):after {
+    content: ' ERROR: All images must have alt attributes' !important;
+}
+area:not([alt]):after{
+    content: ' ERROR: Provide alt attribute for all areas of an image map' !important;
+}
+/* something that has a role of image but no alternative */
+*[role="img"]:not([aria-label]):after{
+    content: ' ERROR: Item has image role without an alternative' !important;
+}
+
+/* images without a source */
+img:not([src]):after, img[src=""]:after, img[src="#"]:after
+{
+    content: ' ERROR: image has no source' !important;
+}
+/* The summary attribute is not supported in HTML5. */
+table[summary] {outline: 5px solid red;}
+table[summary=""] {outline: 3px dotted red;}
+th {border: 2px solid red;}
+th[scope="col"], th[scope="row"] {border: none;}
+
+a[href]:not([title]) {border: 5px solid red;}
+a[title=""] {outline: 3px dotted red;}
+a[href="#"] {background: lime;}
+a[href=""] {background: fuchsia;}
+/* Bad links, possibly relying on javascript to do something */
+a[href=""]:after, a[href="#"]:after, a:not([href]):after, a[href*=javascript\:]:after, a:not([href])[onclick]:after{
+    content: ' ERROR: links must have a valid hypertext reference' !important;
+}
+fieldset > :not(legend):first-child:after,	/* no other element than a legend can be first child of a fieldset element */
+fieldset > legend:not(:first-child):after {	/* and a legend can't be anything else than first child of a fieldset element */
+    content: ' ERROR: fieldsets must have legends' !important;
+}
+/*
+	Input[type="image"] and their alt attribute
+	Note: adding :before or :after on this type of element won't work as expected. Maybe background-image encoded in base64?
+	@reference Technique for WCAG 2.0 H36: Using alt attributes on images used as submit buttons - http://www.w3.org/TR/WCAG-TECHS/H36.html
+	@reference Technique for WCAG 2.0 F65: Failure (...) due to omitting the alt attribute on (...) input elements of type "image" - http://www.w3.org/TR/WCAG-TECHS/F65.html
+*/
+input[type="image"][alt=""]:after,
+input[type="image"]:not([alt]):after {
+    content: ' ERROR: Image input requires alt attribute' !important;
+}
+/*
+	dir attribute
+*/
+/* If used, dir attribute only accepts 2 possible values */
+[dir]:not([dir="rtl"]):not([dir="ltr"]):after {
+    content: ' ERROR: dir attribute has invalid value' !important;	
+}
+/* empty? */
+title:empty:after {
+	content: ' ERROR: title element is empty' !important;
+}
+/* Implicit headings */
+p b:only-child:after, p strong:only-child:after{
+    content: ' ERROR: Should this bold text be a heading?' !important;
+}
+/* bullet type should be declared in CSS */
+ol[type]:after, ul[type]:after{
+    content: ' ERROR: Bullet type should be declared in CSS' !important;
+}
+
+/*
+	Meta refresh?
+	@source CSS selector from Opquast Checklist Accessibility First step https://checklists.opquast.com/en/accessibilityfirststep/
+	@reference Technique for WCAG 2.0 F40: Failure (...) due to using meta redirect with a time limit - http://www.w3.org/TR/WCAG-TECHS/F40.html
+*/
+meta[http-equiv=refresh]:after {
+    content: ' ERROR: Replace meta refresh' !important;
+}
+/*
+	Lang attribute on html element
+	@reference Technique for WCAG 2.0 H57: Using language attributes on the html element  - http://www.w3.org/TR/WCAG-TECHS/F40.html
+*/
+html:not([lang]):after{
+	content: ' ERROR: HTML element requires lang attribute' !important;
+}
+/* Accesskey is a bad idea. 
+ * @reference Old discussion but still hits on salient points http://www.cs.tut.fi/~jkorpela/forms/accesskey.html */
+*[accesskey]:after{
+    content: ' ERROR: Accesskey is a bad idea' !important;
+}
+/**
+ *     TABLE RELATED CHECKS
+ */
+/* Empty Header Cells */
+th:empty:after {
+    content: ' ERROR: replace empty TH element with TD' !important;
+}
+/* test for nested table */
+th > table:after, td > table:after, body > table:first-child:after, table table:after{
+    content: ' ERROR: nested table found. Is this a layout table?' !important;
+}
+/* only one TR in the table. Is that a layout table? */ 
+table > tr:only-child:after, 
+table > tbody > tr:only-child:after {
+    content: ' ERROR:  only one TR in this table. Is this a layout table?' !important;
+}
+/* Deprecated attributes on table */
+table[align]:after,
+table[bgcolor]:after,
+table[border]:after,
+table[cellpadding]:after,
+table[cellspacing]:after,
+table[width]:after,
+td[width]:after,
+td[valign]:after
+{
+    content: ' ERROR: Deprecated markup in table' !important;
+}
+/**
+ *     List-related issues
+ */
+ol > *:not(li):after,
+ul > *:not(li):after {
+    content: ' ERROR: List markup invalid' !important;
+}
+dl > *:not(dt):not(dd):after {
+    content: ' ERROR: Definition list markup invalid' !important;
+}
+dt + *:not(dd):after {
+    content: ' ERROR: Definition must follow term' !important;
+}
