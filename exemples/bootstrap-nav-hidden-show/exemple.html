@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>nav hidden show</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<style type="text/css">
+		@import url(http://fonts.googleapis.com/css?family=Anton|Maven+Pro:500,700);
+
+		body {
+			font-family: 'Maven Pro', sans-serif;
+		}
+
+		h2 {
+			font-family: 'Anton', sans-serif;
+			text-transform: uppercase;
+		}
+
+
+		.animate {
+			-webkit-transition: all 0.5s ease-in-out;
+			-moz-transition: all 0.5s ease-in-out;
+			-o-transition: all 0.5s ease-in-out;
+			-ms-transition: all 0.5s ease-in-out;
+			transition: all 0.5s ease-in-out;
+		}
+
+		.nav-controller {
+			position: fixed;
+			top: 15px;
+			right: 15px;
+			padding: 5px 6px 1px;
+			border: 5px solid rgb(51, 51, 51);
+			color: rgb(51, 51, 51);
+			border-radius: 25px;
+			font-size: 12pt;
+			cursor: pointer;
+			z-index: 300;
+		}
+
+		nav ~ .nav-controller > .controller-open {
+			display: inline-block;
+		}
+
+		nav ~ .nav-controller > .controller-close {
+			display: none;
+		}
+		nav.focus ~ .nav-controller > .controller-open {
+			display: none;
+		}
+
+		nav.focus ~ .nav-controller > .controller-close {
+			display: inline-block;
+		}
+
+		nav {
+			position: fixed;
+			top: 0px;
+			right: -100%;
+			padding-top: 65px;
+			padding-bottom: 15px;
+			height: 100%;
+			max-width: 200px;
+			text-align: right;
+			background-color: rgb(255, 255, 255);
+			box-shadow: -3px 0px 3px 0px rgba(160, 160, 160, 0.30);
+			z-index: 100;    
+			overflow: auto;
+		}
+
+		nav.focus {
+			right: 0px;
+		}
+
+		nav > .divider {
+			content: '';
+			border-bottom: 1px solid rgb(230, 230, 230);
+			max-height: 1px;
+			overflow: hidden;
+			margin: 15px 0px;
+		}
+
+		nav > h4,
+		nav > p,
+		nav > ul {
+			padding: 0px 10px;
+		}
+
+		nav > h4 {
+			font-family: 'Anton', sans-serif;
+		}
+
+		nav > ul {
+			list-style: none;
+		}
+		nav > ul > li {
+			margin: 5px 0px;   
+		}
+		nav > ul > li > a {
+			color: rgb(190, 190, 190);   
+		}
+		nav > ul > li > a:hover {
+			font-size: 1.1em;
+			font-weight: 700;
+			color: rgb(51, 51, 51);
+			text-decoration: none;
+		}
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+	<div class="row">
+        <div class="[ col-xs-12 col-sm-6 col-md-4 ]">
+		    <h2>SVBTL MENU</h2>
+            <span class="console"></span>
+            <p>So When I came across this site called <a href="https://svbtle.com">Svbtle</a> today (June 25th, 2014) and before even reading the article that brought me to the site I feel in love with the design. It was so simple it was beautiful. I wanted to recreate the menu so here is my attempt.</p>
+	    </div>        
+	</div>
+</div>
+
+<nav class="animate">
+    <p>Mouse0270 created this snippet on <strong>Bootsnipp</strong> network.</p>
+    <ul>
+        <li>
+            <a href="https://twitter.com/mouse0270">@mouse0270 on twitter</a>
+        </li>
+        <li>
+            <a href="https://facebook.com/rem.mcintosh">Learn More about me on Facebook</a>
+        </li>
+        <li>
+            <a href="http://bootsnipp.com/mouse0270">Snippets</a>
+        </li>
+        <li>
+            <a href="https://github.com/mouse0270">Projects</a>
+        </li>
+        <li>
+            <a href="http://bootsnipp.com/user/snippets/www.linkedin.com/in/remcintosh/">Résumé</a>
+        </li>
+    </ul>
+    <div class="divider"></div>
+    <h4>Thanks To</h4>
+    <ul>
+        <li>
+            <a href="https://twitter.com/BootSnipp">@BootSnipp on twitter</a>
+            <a href="https://twitter.com/Svbtle">@Svbtle on twitter</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="nav-controller">
+    <span class="[ glyphicon glyphicon-chevron-down ] controller-open"></span>
+    <span class="[ glyphicon glyphicon-remove ] controller-close"></span>
+</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$('nav, .nav-controller').on('click', function(event) {
+				$('nav').toggleClass('focus');
+			});
+			$('nav, .nav-controller').on('mouseover', function(event) {
+				$('nav').addClass('focus');
+			}).on('mouseout', function(event) {
+				$('nav').removeClass('focus');
+			})
+		})
+	</script>
+</body>
+</html>
