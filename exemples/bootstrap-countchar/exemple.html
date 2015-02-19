@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Input counter with alert</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" id="font-awesome">
+	<style type="text/css">
+		/* CSS */
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<h2>Input counter with alert</h2>
+	</div>
+    <div class="row">
+		<div class="col-xs-12">
+		<form class="form-horizontal">
+		  <div class="form-group max-length has-feedback">
+			<label class="control-label col-sm-3">no data in input</label>
+			<div class="col-sm-9">
+			  <div class="input-group">
+				<span class="input-group-addon">0</span>
+				<input type="text" class="form-control" data-max-length="80">
+			  </div>
+			  <span class="fa fa-check form-control-feedback"></span>
+			</div>
+		  </div>
+		  
+		  <div class="form-group max-length has-feedback">
+			<label class="control-label col-sm-3">max length warning</label>
+			<div class="col-sm-9">
+			  <div class="input-group">
+				<span class="input-group-addon">0</span>
+				<input type="text" value="lorem ipsum dollor digits data quotes" class="form-control" data-max-length="3">
+			  </div>
+			  <span class="fa fa-check form-control-feedback"></span>
+			</div>
+		  </div>
+		  
+		  <div class="form-group max-length has-feedback">
+			<label class="control-label col-sm-3">no span.form-control-feedback</label>
+			<div class="col-sm-9">
+			  <div class="input-group">
+				<span class="input-group-addon">0</span>
+				<input type="text" value="no span.form-control-feedback" class="form-control" data-max-length="30">
+			  </div>
+			</div>
+		  </div>	  
+		</form>
+		</div>
+	</div>
+</div>
+	<script type="text/javascript">
+		
+(function($){
+    $.inputCounterLength = function(el){
+        // To avoid scope issues, use 'base' instead of 'this'
+        // to reference this class from internal events and functions.
+        var base = this;
+        
+        // Access to jQuery and DOM versions of element
+        base.$el = $(el);
+        base.el = el;
+        
+        // Add a reverse reference to the DOM object
+        base.$el.data("inputCounterLength", base);
+        
+        base.init = function(){
+            // Put your initialization code here
+			base.$el.each(function( index ) {
+				$$ = jQuery( this );
+				var uuid = function(){
+						var s4 = function () {
+							return Math.floor((1 + Math.random()) * 0x10000)
+							.toString(16)
+							.substring(1);
+						};
+						return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+						s4() + '-' + s4() + s4() + s4();
+					};
+				$$.attr('id', uuid());
+				
+				// Max length
+				var mL = $$.find('[data-max-length]').attr('data-max-length');
+				// Current Length
+				var cL = $$.find('input').val().length;
+				// Rest Length
+				var rL = mL-cL;
+				if (rL < 0) {
+					$$.addClass('has-error');
+					$$.find('.form-control-feedback').removeClass($$.find('.form-control-feedback').attr('class')).addClass('form-control-feedback fa fa-times')
+				} else {
+					$$.find('.form-control-feedback').removeClass($$.find('.form-control-feedback').attr('class')).addClass('form-control-feedback fa fa-check')
+				}
+				$$.find('.input-group-addon').text(mL-cL);
+				jQuery(this).parent('.input-group-addon').text(cL);
+				
+				
+				jQuery("#" + $$.attr('id'))
+					.on('input', function(){
+						var fg = jQuery(this);
+						var id = fg.attr('id');
+						var iga = fg.find('.input-group-addon');
+						var fcf = fg.find('.form-control-feedback');
+						var inp = fg.find('input');
+						
+						var cL = inp.val().length;
+						var mL = inp.attr('data-max-length');
+						var rL = mL-cL;
+
+						if (rL < 0) {
+							fg.addClass('has-error');
+							fcf
+								.removeClass(fcf.attr('class'))
+								.addClass('form-control-feedback fa fa-times')
+						} else {
+							fg.removeClass('has-error');
+							fcf
+								.removeClass(fcf.attr('class'))
+								.addClass('form-control-feedback fa fa-check')
+						}
+						iga.text(mL-cL);		
+					});
+			});
+			
+        };
+         
+        // Sample Function, Uncomment to use
+        // base.functionName = function(paramaters){
+        // 
+        // };
+        
+        // Run initializer
+        base.init();
+    };
+    
+    
+    $.fn.inputCounterLength = function(element){
+        return this.each(function(){
+            (new $.inputCounterLength(this));
+
+		   // HAVE YOUR PLUGIN DO STUFF HERE
+			
+	
+		   // END DOING STUFF
+
+        });
+    };
+    
+})(jQuery);
+
+jQuery.inputCounterLength('.form-group.max-length');
+	</script>
+</body>
+</html>
