@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Input color picker</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<style type="text/css">
+		/* CSS */
+    </style>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+	<link href="css/colpick.css" rel="stylesheet" id="colpickCss">
+	<script src="js/colpick.js" id="colpickJs"></script>
+</head>
+<body>
+
+
+
+<div class="container">
+	<div class="row">
+		<h2>Input color picker</h2>
+	</div>
+    <div class="row">
+		<div class="col-xs-12">
+		
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">#</span>
+					<input type="text" class="form-control" placeholder="000000"></input>
+					<span class="input-group-addon colpicker">&nbsp;</span>
+				</div>
+			</div>
+
+		
+			<div class="form-group">
+				<div class="input-group">
+					<span class="input-group-addon">#</span>
+					<input type="text" class="form-control" value="00FF00"></input>
+					<span class="input-group-addon colpicker">&nbsp;</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<script type="text/javascript">
+	// http://www.jqueryrain.com/?FWAzbWcA
+	jQuery('.colpicker').colpick({
+		layout:'hex',
+		submit:0,
+		colorScheme:'dark',
+		onChange:function(hsb,hex,rgb,el,bySetColor) {
+			jQuery(el).parent().find('input').val(hex);
+			jQuery(el).css('background-color','#'+hex);
+			if(!bySetColor) jQuery(el).val(hex);
+		}
+	}).keyup(function(){
+		jQuery(this).colpickSetColor(this.value);
+	});
+	// Little add to change .colpicker background ^^
+	jQuery('.colpicker').each(function(index){
+		var fc = jQuery(this).parent().find('.form-control').attr('maxlength', 6);
+		jQuery(this).css('background-color','#'+fc.val());
+		fc.on('input', function(ev){
+			// TODO Change fn.colpick.color 
+			var cp = jQuery(this)
+				.parent().find('.colpicker');
+				cp.css('background-color','#'+jQuery(this).val());
+		});
+	});
+	</script>
+</body>
+</html>
